@@ -30,7 +30,7 @@ Measured with these weights (details and caveats in [`docs/EVALUATION.md`](docs/
 
 | Benchmark | `ecgdl` CPU baseline | Reference |
 |---|---|---|
-| [PM-ECG-ID](https://doi.org/10.5281/zenodo.13617673), stratified sample: 60 ECGs, one per capture scenario (66 real images) | SNR **7.30 dB**, PCC **0.581**, failed leads **26.5%**; 5.5 s per image on 2 CPU cores | PMcardio, whole database (published): SNR > 12.5 dB, PCC > 0.91, 6.62% failed. Classical `ecgdig`, whole database (its README): 7.91 dB, PCC 0.656, 15.3% failed. |
+| [PM-ECG-ID](https://doi.org/10.5281/zenodo.13617673), stratified sample: 60 ECGs, one per capture scenario (66 real images) | SNR **7.30 dB**, PCC **0.581**, failed leads **26.5%**; 5.5 s per image on 2 CPU cores | PMcardio, whole database (published): SNR > 12.5 dB, PCC > 0.91, 6.62% failed. Classical `ecgdig` on the same 60 ECGs: 8.00 dB, PCC 0.688, 12.6% failed; 18 s per image. |
 | Same sample, the 24 ECGs read with mean PCC >= 0.9 | SNR 14.5 dB, PCC 0.963 | PMcardio "easy" scenarios (published): 16.7 dB, PCC 0.977 |
 | Same sample, phone photo (iPhone, 3x4 + 3 rhythm strips) | SNR 15.2 dB, PCC 0.982 | |
 | Held-out trace crops (synthetic, 420 crops) | SNR 17.1 dB (median 18.2), 0.48 px | codec ceiling at this resolution: 28 dB |
@@ -48,9 +48,13 @@ What the numbers say:
   not cover. Lead names are essentially not read on real pages yet (the baseline name
   detector has 22% precision even on synthetic pages), so the arrangement comes from
   the row structure plus the Einthoven referee.
-- **It does not beat PMcardio or the Kaggle winners today.** The overall PM-ECG-ID
-  numbers are below PMcardio's published ones and close to the classical `ecgdig`.
-  The path from here is training at scale and on real ink ([`docs/ROADMAP.md`](docs/ROADMAP.md)).
+- **It does not beat PMcardio, the Kaggle winners or our own classical digitizer today.**
+  On the same 60 ECGs `ecgdig` is ahead overall (PCC 0.688 against 0.581, half as many
+  failed leads). `ecgdl` is about three times faster and more accurate on the leads it
+  does read (9.9 against 9.2 dB without failures); it is clearly better on 12 ECGs,
+  `ecgdig` on 21, and taking the better of the two per ECG would give PCC 0.76, so the
+  two fail on different pages. The path from here is training at scale and on real ink
+  ([`docs/ROADMAP.md`](docs/ROADMAP.md)).
 
 
 ## Install and use

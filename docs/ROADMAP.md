@@ -14,6 +14,16 @@ CPU baseline from the targets (PMcardio on PM-ECG-ID, the Kaggle top five).
 - [ ] Whole-database PM-ECG-ID and Kaggle runs on CI, as in `ecg-digitalization-classic`
       (a 66-image sample moves by several dB with one page).
 
+## 1b. Hybrid with the classical digitizer
+
+On the 60-ECG PM-ECG-ID sample `ecgdig` and `ecgdl` fail on different pages (best of the
+two per ECG: PCC 0.76 against 0.69 and 0.58 alone).
+
+- [ ] Use `ecgdig`'s layout (format, names by template matching, speed and gain reading) to
+      place the metric crops, and TraceNet to decode them.
+- [ ] Use `ecgdig`'s grid phase as the lattice when PageNet finds no grid, and the other way round.
+- [ ] A selector between the two outputs from their quality indicators.
+
 ## 2. Close the sim-to-real gap
 
 - [ ] Self-training on the Kaggle training images: digitize, keep confident lattices and

@@ -34,11 +34,21 @@ from every training split.
 | | SNR (dB) | PCC | Failed leads | SNR without failures | RMSE without failures |
 |---|---|---|---|---|---|
 | `ecgdl` CPU baseline, 60-ECG sample | **7.30** | **0.581** | **26.5%** | 9.94 dB | 0.117 mV |
+| `ecgdig` (classical), same 60 ECGs, same protocol | 8.00 | 0.688 | 12.6% | 9.16 dB | 0.114 mV |
 | PMcardio, whole database (published) | > 12.5 | > 0.91 | 6.62% | | |
 | `ecgdig` (classical), whole database (its README) | 7.91 | 0.656 | 15.3% | | |
 
 Median time per image: 5.5 s on two CPU cores (PageNet at up to 1152 px, lattice,
-layout with the referee, TraceNet on every row twice).
+layout with the referee, TraceNet on every row twice); `ecgdig` took 18.4 s per image on
+the same machine (two parallel jobs).
+
+**Paired comparison with `ecgdig`.** On the same 60 ECGs the classical digitizer is ahead:
+PCC 0.688 against 0.581 and 12.6% against 26.5% failed leads. Per ECG (mean PCC over the
+12 leads, a difference above 0.1 counted as a win): `ecgdl` better on 12, `ecgdig` better
+on 21, similar on 27. On the leads it reads `ecgdl` is more accurate (9.94 against
+9.16 dB). Choosing the better of the two for each ECG would give PCC 0.76 and 10.6 dB:
+they fail on different pages, which is an argument for a hybrid (classical layout and
+geometry as fallback, learned trace decoding).
 
 By scenario family (same sample):
 
