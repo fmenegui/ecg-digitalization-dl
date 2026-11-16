@@ -1,0 +1,36 @@
+# Full-size TraceNet: online synthesis on the GPU, 12 px/mm in time (300 px/s at 25 mm/s;
+# the column codec alone then reaches > 35 dB on PTB-XL, see docs/ARCHITECTURE.md).
+kind: trace
+model:
+  encoder: "timm:convnext_small.in12k_ft_in1k"
+  pretrained: true
+  widths: [48]
+  crop_height: 256
+  px_per_mm_x: 12.0
+data:
+  online: true
+  bank: data/ptbxl/bank.npz
+  pages_per_batch: 4
+  crop:
+    height: 256
+    width: 1024
+    px_per_mm_x: 12.0
+    span_mm: [28.0, 80.0]
+    crops_per_page: 6
+  synth:
+    height: 1536
+    width: 2048
+    severity: 0.7
+    parameters:
+      grid_present: [bernoulli, 0.95]
+      photo: [bernoulli, 0.8]
+      speed_index: [choice, [1, 1, 1, 1, 1, 1, 0, 2]]
+      gain_index: [choice, [1, 1, 1, 1, 1, 0, 2]]
+train:
+  out_dir: runs/trace_gpu
+  steps: 120000
+  lr: 3.0e-4
+  warmup: 2000
+  ema: 0.9995
+  eval_every: 5000
+  save_every: 1000

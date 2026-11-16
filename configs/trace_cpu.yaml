@@ -1,0 +1,22 @@
+# TraceNet baseline that trains on a laptop CPU from a pre-built crop cache.
+kind: trace
+model:
+  widths: [16, 32, 64, 128, 192]
+  depths: [1, 1, 1, 2, 2]
+  crop_height: 96
+  px_per_mm_x: 6.0
+data:
+  crops: data/cache/train_crops
+  val_crops: data/cache/val_crops
+  batch_size: 8
+  workers: 1
+  augment: 1.0
+train:
+  out_dir: runs/trace_cpu
+  steps: 6000
+  lr: 2.0e-3
+  warmup: 200
+  ema: 0.998
+  eval_every: 500
+  save_every: 250
+  log_every: 50

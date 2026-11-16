@@ -1,0 +1,11 @@
+# Renderer settings for training pages (ecg-torch-renderer).
+# Standard paper settings dominate, the rarer speeds and gains keep the models honest.
+height: 768
+width: 1024
+severity: 0.6
+profile: mixed
+parameters:
+  grid_present: [bernoulli, 0.93]
+  photo: [bernoulli, 0.75]
+  speed_index: [choice, [1, 1, 1, 1, 1, 1, 0, 2]]   # 12.5 / 25 / 50 mm/s
+  gain_index: [choice, [1, 1, 1, 1, 1, 0, 2]]       # 5 / 10 / 20 mm/mV

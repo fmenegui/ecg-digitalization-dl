@@ -1,0 +1,12 @@
+ecgdl - hybrid deep-learning + classical-geometry digitizer for paper ECG images
+Copyright 2026 Felipe Meneguitti Dias and contributors
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+The benchmark protocol in benchmarks/pm_ecg_id.py follows the one written for
+ecg-digitalization-classic (same authors, Apache-2.0).
+
+Third-party data are not redistributed:
+- PTB-XL (Wagner et al., 2020), CC BY 4.0, https://physionet.org/content/ptb-xl/
+- PM-ECG-ID (Iring et al., 2024), GPL-3.0-or-later, https://doi.org/10.5281/zenodo.13617673
+- PhysioNet - Digitization of ECG Images (Kaggle), under the competition rules

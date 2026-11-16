@@ -1,0 +1,26 @@
+# Full-size PageNet: online synthesis on the GPU, full pages at 1536 x 2048.
+kind: page
+model:
+  encoder: "timm:convnext_small.in12k_ft_in1k"
+  pretrained: true
+  widths: [48]
+  stem_stride: 2
+data:
+  online: true
+  bank: data/ptbxl/bank.npz
+  batch_size: 4
+  window: 1024
+  synth:
+    height: 1536
+    width: 2048
+    severity: 0.7
+    parameters:
+      grid_present: [bernoulli, 0.93]
+      photo: [bernoulli, 0.8]
+train:
+  out_dir: runs/page_gpu
+  steps: 100000
+  lr: 3.0e-4
+  warmup: 2000
+  ema: 0.9995
+  save_every: 1000

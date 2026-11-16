@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ecgdl"
+version = "0.1.0"
+description = "Hybrid deep-learning + classical-geometry digitizer for paper ECG images"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.3",
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "Pillow>=10.1",
+    "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+train = ["ecg-torch-renderer @ git+https://github.com/fmenegui/ecg-torch-renderer.git"]
+timm = ["timm>=1.0"]
+bench = ["remotezip>=0.12", "pandas>=2.0"]
+export = ["onnx>=1.16", "onnxruntime>=1.18"]
+dev = ["pytest>=8", "ruff>=0.11"]
+
+[project.scripts]
+ecgdl = "ecgdl.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["ecgdl*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501", "E741", "B905"]  # long lines are accepted where they keep an expression readable
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["renderer: needs the optional ecg-torch-renderer package", "slow: slower end-to-end checks"]

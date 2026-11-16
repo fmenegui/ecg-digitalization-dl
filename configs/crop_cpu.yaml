@@ -1,0 +1,6 @@
+# Trace crops for the CPU baseline: 96 x 320 px, 6 px/mm in time (150 px/s at 25 mm/s).
+height: 96
+width: 320
+px_per_mm_x: 6.0
+span_mm: [28.0, 64.0]
+crops_per_page: 20

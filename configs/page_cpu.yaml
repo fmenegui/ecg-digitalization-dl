@@ -1,0 +1,23 @@
+# PageNet baseline that trains on a laptop CPU from cached pages (random 256 px windows).
+kind: page
+model:
+  widths: [24, 32, 64, 96, 160]
+  depths: [1, 1, 1, 2, 2]
+  stem_stride: 2
+data:
+  pages: data/cache/train
+  val_pages: data/cache/val
+  val_count: 12
+  window: 256
+  batch_size: 6
+  workers: 1
+  augment: 1.0
+train:
+  out_dir: runs/page_cpu
+  steps: 8000
+  lr: 2.0e-3
+  warmup: 200
+  ema: 0.998
+  eval_every: 1000
+  save_every: 250
+  log_every: 50
